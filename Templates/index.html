@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora Garantido</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsividade -->
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: left;
+            color: #444;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* Campo menor para valor feito */
+        .input-menor {
+            width: 80%;
+            max-width: 250px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .resultado {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .resultado p {
+            background-color: #eaffea;
+            border-left: 5px solid #4CAF50;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            color: #2a662a;
+            font-weight: bold;
+        }
+
+        /* RESPONSIVIDADE: ajusta para celular */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 20px;
+                max-width: 100%;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            input.input-menor {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            button {
+                font-size: 18px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Valor Garantido</h2>
+
+        <form method="POST">
+            <label for="valor">Valor feito:</label>
+            <input type="number" step="0.01" name="valor" required class="input-menor">
+
+            <label for="garantido">Valor garantido:</label>
+            <select name="garantido" required>
+                <option value="" disabled {% if not garantido_atual %}selected{% endif %}>Selecione o valor</option>
+                {% for valor in [75, 90, 100, 110, 120, 130, 140, 150] %}
+                    <option value="{{ valor }}" {% if garantido_atual == valor %}selected{% endif %}>
+                        R$ {{ valor }},00
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Calcular</button>
+        </form>
+
+        {% if historico %}
+        <div class="resultado">
+            <h3>Resultado{{ historico|length > 1 and 's' or '' }}:</h3>
+            {% for item in historico %}
+                <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
