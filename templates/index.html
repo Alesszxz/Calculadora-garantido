@@ -120,7 +120,7 @@
             <label for="garantido">Valor garantido:</label>
             <select name="garantido" required>
                 <option value="" disabled {% if not garantido_atual %}selected{% endif %}>Selecione o valor</option>
-                {% for valor in [75, 90, 100, 110, 120, 130, 140, 150] %}
+                {% for valor in [72, 90, 100, 110, 120, 130, 140, 150] %}
                     <option value="{{ valor }}" {% if garantido_atual == valor %}selected{% endif %}>
                         R$ {{ valor }},00
                     </option>
